@@ -128,9 +128,16 @@ CZMQ_EXPORT int
 
 //  Receive next message from network; the message may be a control
 //  message (ENTER, EXIT, JOIN, LEAVE) or data (WHISPER, SHOUT).
-//  Returns zmsg_t object, or NULL if interrupted
+//  Returns zmsg_t object, or NULL if interrupted. Will block if there's
+//  no message waiting
 CZMQ_EXPORT zmsg_t *
     zyre_recv (zyre_t *self);
+
+//  Receive next message from network; the message may be a control
+//  message (ENTER, EXIT, JOIN, LEAVE) or data (WHISPER, SHOUT).
+//  Returns zmsg_t object, or NULL if interrupted
+CZMQ_EXPORT zmsg_t *
+    zyre_recv_nowait (zyre_t *self);
 
 //  Send message to single peer, specified as a UUID string
 //  Destroys message after sending

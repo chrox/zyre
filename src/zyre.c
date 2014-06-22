@@ -296,7 +296,8 @@ zyre_leave (zyre_t *self, const char *group)
 //  ---------------------------------------------------------------------
 //  Receive next message from network; the message may be a control
 //  message (ENTER, EXIT, JOIN, LEAVE) or data (WHISPER, SHOUT).
-//  Returns zmsg_t object, or NULL if interrupted
+//  Returns zmsg_t object, or NULL if interrupted. Will block if there's
+//  no message waiting
 
 zmsg_t *
 zyre_recv (zyre_t *self)
@@ -305,6 +306,17 @@ zyre_recv (zyre_t *self)
     return zmsg_recv (self->inbox);
 }
 
+//  ---------------------------------------------------------------------
+//  Receive next message from network; the message may be a control
+//  message (ENTER, EXIT, JOIN, LEAVE) or data (WHISPER, SHOUT).
+//  Returns zmsg_t object, or NULL if interrupted
+
+zmsg_t *
+zyre_recv_nowait (zyre_t *self)
+{
+    assert (self);
+    return zmsg_recv_nowait (self->inbox);
+}
 
 //  ---------------------------------------------------------------------
 //  Send message to single peer, specified as a UUID string
